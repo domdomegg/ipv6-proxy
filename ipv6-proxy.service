@@ -1,0 +1,10 @@
+[Unit]
+Description=IPv6 Proxy
+After=network.target
+
+[Service]
+ExecStart=PATH_TO_IPV6_PROXY/ipv6-proxy.sh
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
