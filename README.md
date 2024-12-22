@@ -31,6 +31,24 @@ It'll set things up so that it automatically starts up on a reboot. It'll also h
 
 By default this will forward ports 80 and 443. To forward other ports, tweak [`ipv6-proxy.sh`](./ipv6-proxy.sh).
 
+## Debugging
+
+### Checking Status
+
+Check if the proxy is running:
+
+```bash
+sudo systemctl status ipv6-proxy
+```
+
+### Viewing Logs
+
+To view the proxy logs:
+
+```bash
+sudo journalctl -u ipv6-proxy -b -f
+```
+
 ## Uninstalling
 
 1. Run `./uninstall.sh`
