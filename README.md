@@ -25,7 +25,7 @@ It'll set things up so that it automatically starts up on a reboot. It'll also h
 
 ## Setup
 
-1. Clone this repository into the machine's home directory and open it with `cd $HOME && git clone https://github.com/domdomegg/ipv6-proxy.git && cd ipvy-proxy`
+1. Clone this repository into the machine's home directory and open it with `cd $HOME && git clone https://github.com/domdomegg/ipv6-proxy.git && cd ipv6-proxy`
 2. Save the target domain as target.txt: `echo "google.com" > target.txt` (change as necessary)
 3. Run the install script: `./install.sh`
 
