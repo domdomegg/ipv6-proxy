@@ -22,6 +22,9 @@ stop_processes() {
     kill -9 $pid1 $pid2 2>/dev/null
 }
 
+# systemd starts us in /, so look for target.txt next to this script
+cd "$(dirname "$0")"
+
 if [ ! -f "target.txt" ]; then
     echo "No target.txt found! Create one with the target domain."
 fi
