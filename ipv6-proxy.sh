@@ -5,8 +5,8 @@ set -euo pipefail
 start_processes() {
     echo "Starting proxy..."
     TARGET=$(dig +short AAAA "$(cat target.txt)" | head -n1)
-    command1="sudo socat TCP4-LISTEN:80,fork,su=nobody,reuseaddr,backlog=128 TCP6:[$TARGET]:80"
-    command2="sudo socat TCP4-LISTEN:443,fork,su=nobody,reuseaddr,backlog=128 TCP6:[$TARGET]:443"
+    command1="socat TCP4-LISTEN:80,fork,su=nobody,reuseaddr,backlog=128 TCP6:[$TARGET]:80"
+    command2="socat TCP4-LISTEN:443,fork,su=nobody,reuseaddr,backlog=128 TCP6:[$TARGET]:443"
 
     # Run commands in the background
     $command1 &
