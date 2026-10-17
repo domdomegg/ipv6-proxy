@@ -5,6 +5,8 @@ After=network.target
 [Service]
 ExecStart=PATH_TO_IPV6_PROXY/ipv6-proxy.sh
 Type=simple
+Restart=always
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
