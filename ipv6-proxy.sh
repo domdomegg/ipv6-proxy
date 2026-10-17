@@ -46,6 +46,13 @@ start_processes
 while true; do
     sleep 60
 
+    # If a listener has died, exit so systemd restarts us
+    if ! kill -0 "$pid1" 2>/dev/null || ! kill -0 "$pid2" 2>/dev/null; then
+        echo "A proxy process has died, exiting"
+        stop_processes
+        exit 1
+    fi
+
     # Exit on a failed lookup; systemd restarts us and retries
     if ! TARGETS=$(resolve_targets); then
         echo "Failed to resolve an IPv6 address for $(cat target.txt)"
