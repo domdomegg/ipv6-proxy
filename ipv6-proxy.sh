@@ -2,20 +2,10 @@
 
 set -euo pipefail
 
-POLL_INTERVAL=60 # Seconds between DNS checks
-
-# Prints the IPv6 addresses for the target domain (one per line), or fails if there are none
+# Prints the IPv6 addresses for the target domain (one per line), or fails if there are none.
+# dig +short may print CNAMEs before the addresses, so keep only lines that look like IPv6.
 resolve_targets() {
-    local output line found=1
-    output=$(dig +short +time=5 +tries=2 AAAA "$(cat target.txt)") || return 1
-    while read -r line; do
-        # dig +short may print CNAMEs before the addresses, so skip anything that isn't IPv6
-        if [[ "$line" =~ ^[0-9a-fA-F:]+$ && "$line" == *:* ]]; then
-            echo "$line"
-            found=0
-        fi
-    done <<< "$output"
-    return $found
+    dig +short +time=5 +tries=2 AAAA "$(cat target.txt)" | grep -E '^[0-9a-fA-F:]*:[0-9a-fA-F:]*$'
 }
 
 start_processes() {
@@ -54,11 +44,12 @@ TARGET=$(head -n1 <<< "$TARGETS")
 
 start_processes
 while true; do
-    sleep "$POLL_INTERVAL"
+    sleep 60
 
+    # Exit on a failed lookup; systemd restarts us and retries
     if ! TARGETS=$(resolve_targets); then
-        echo "Failed to resolve an IPv6 address for $(cat target.txt), keeping current target $TARGET"
-        continue
+        echo "Failed to resolve an IPv6 address for $(cat target.txt)"
+        exit 1
     fi
 
     # Only restart if our current address is no longer in DNS (avoids churn with round-robin records)
