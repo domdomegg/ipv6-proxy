@@ -8,7 +8,7 @@ In the future, everyone will have IPv6 access and the world will be good. Unfort
 
 This repository contains everything you need to run a proxy server that enables IPv4-only clients to speak with an IPv6-only server.
 
-It'll set things up so that it automatically starts up on a reboot. It'll also handle updating DNS entries, so if your IPv6-only server is moving around it'll stay working (well, with up to 1 minute of downtime - tweak `POLL_INTERVAL` in [`ipv6-proxy.sh`](./ipv6-proxy.sh)). It only restarts the proxy when the address actually changes, and keeps the current one if a DNS lookup fails.
+It'll set things up so that it automatically starts up on a reboot. It'll also handle updating DNS entries, so if your IPv6-only server is moving around it'll stay working (well, with up to 1 minute of downtime - tweak the polling interval in [`ipv6-proxy.sh`](./ipv6-proxy.sh)). It only restarts the proxy when the address actually changes.
 
 ## Requirements
 
